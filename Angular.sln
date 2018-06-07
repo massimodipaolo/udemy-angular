@@ -5,10 +5,10 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{754FD6EC-8E38-40EB-AA21-C87660F2CD5E}"
 	ProjectSection(SolutionItems) = preProject
-		notes.txt = notes.txt
+		_.txt = _.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "back-end", "back-end\back-end.csproj", "{16DB8310-7534-4C08-905D-A30BAC339A76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "back-end", "back-end\back-end.csproj", "{16DB8310-7534-4C08-905D-A30BAC339A76}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FC283114-6095-40A8-AF30-35E64357C3B6}"
 EndProject
