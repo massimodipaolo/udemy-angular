@@ -1,0 +1,14 @@
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://picsum.photos/200/200?random" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">
+      <ng-content select=".title"></ng-content>
+    </h5>
+    <p class="card-text">
+      <ng-content select=".text"></ng-content>
+    </p>
+    <a href="#" class="btn btn-primary">
+      <ng-content select=".cta"></ng-content>
+    </a>
+  </div>
+</div>

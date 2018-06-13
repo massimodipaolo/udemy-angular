@@ -9,6 +9,7 @@ import { CoursesService } from './courses.service';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { TitleCasePipe } from './pipes/title-case.pipe';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { TitleCasePipe } from './pipes/title-case.pipe';
     FavoriteComponent,
     SummaryPipe,
     TitleCasePipe,
-    
+    CardComponent,    
   ],
   imports: [
     BrowserModule,

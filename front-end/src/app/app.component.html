@@ -23,3 +23,13 @@
 <app-course></app-course>
 
 <app-favorite></app-favorite>
+<app-favorite [is-active]="true"></app-favorite>
+<app-favorite [is-active]="title=='app'" (change)="onFavoriteChange($event)"></app-favorite>
+
+<bootstrap-card>
+  <div class="title">Title</div>
+  <div class="text">
+    <div>Lorem <i>ipsum</i></div>
+  </div>
+  <div class="cta">View more</div>
+</bootstrap-card>

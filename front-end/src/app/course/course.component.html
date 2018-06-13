@@ -13,6 +13,8 @@
       <div>{{item.students | number}}</div>
       <div>{{item.price | currency:'EUR':true}}</div>
       <div>{{item.releaseDate | date:'shortDate'}}</div>
+      <div>Active: {{item.active}}</div>
+      <app-favorite [is-active]="item.active" (change)="item.onFavoriteChange($event)"></app-favorite>
     </div>
     <hr />
   </li>
