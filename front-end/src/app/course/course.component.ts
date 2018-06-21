@@ -13,7 +13,7 @@ export class CourseComponent implements OnInit {
   title: string;
   abstract: string;
   items: Course[];
-
+  jetnaa: string;
   //DI: register in app.module providers
   constructor(service: CoursesService) {
     this.title = "List of courses 2018";

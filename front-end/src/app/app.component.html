@@ -5,18 +5,20 @@
   </h1>
   <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul> 
+
+<app-change-password></app-change-password>
+
+<app-signup (send)="onSignUp($event)"></app-signup>
+
+<app-contact-form (send)="addContact($event)"></app-contact-form>
+<hr/>
+<div *ngFor="let contact of contacts">
+  <div>{{contact.firstName}}</div>
+  <div>{{contact.comment}}</div>
+  <div>contact method: <p *ngFor="let method of contact.contactMethod">{{method.name}}</p></div>
+  <div>alternative: {{contact.secondaryContactMethod?.name}}</div>
+  <button (click)="removeContact(contact)">Remove</button>
+</div>
 
 <courses></courses>
 
@@ -26,10 +28,66 @@
 <app-favorite [is-active]="true"></app-favorite>
 <app-favorite [is-active]="title=='app'" (change)="onFavoriteChange($event)"></app-favorite>
 
-<bootstrap-card>
-  <div class="title">Title</div>
-  <div class="text">
-    <div>Lorem <i>ipsum</i></div>
+<div>
+  <button class="btn" [class.btn-primary]="viewMode=='tweets'" (click)="viewMode='tweets'">Tweets</button>
+  <button class="btn" [class.btn-primary]="viewMode=='card'" (click)="viewMode='card'">Card</button>
+</div>
+
+<div [ngSwitch]="viewMode">
+
+  <div *ngSwitchCase="'card'">
+    <bootstrap-card>
+      <!-- ng-container: inner content -->
+      <ng-container class="title">Title</ng-container>
+      <!-- outer content -->
+      <div class="text">
+        <div>Lorem <i>ipsum</i></div>
+      </div>
+      <ng-container class="cta">View more</ng-container>
+    </bootstrap-card>
   </div>
-  <div class="cta">View more</div>
-</bootstrap-card>
+
+  <div *ngSwitchCase="'tweets'">
+    loadTweet
+    <button class="btn btn-primary" (click)="loadTweets()">Load Tweets</button>
+    <input type="text" #tweetText /> <button class="btn" (click)="addTweet(tweetText.value)">Add Tweet</button>
+    <div *ngIf="tweets.length>0; then tweetsList else noTweets"></div>
+    <ng-template #tweetsList>
+      <div>Tweets: {{tweets.length}}</div>
+      <ul>
+        <li *ngFor="let tweet of tweets; index as i; last as last; trackBy: trackTweets"> <!-- trackBy: avoid re-rendering object that are unchanged; for large lists; -->
+          <!-- angular.io > search ngForOf for local variables list -->
+          <div>
+            <bootstrap-card>
+              <ng-container class="title">{{i}}) {{tweet.text | summary:10 }} {{tweet.author?.name}}<i class="fa fa-flag" [hidden]="tweet.likes<10"></i></ng-container>
+              <div class="text">
+                {{tweet.text}}
+                <app-like [isActive]="tweet.liked" [likesCount]="tweet.likes" (change)="tweet.onLike($event)"></app-like>
+              </div>
+              <ng-container class="cta">View more {{last}}</ng-container>
+            </bootstrap-card>
+            <button class="btn btn-warning" (click)="removeTweet(tweet)">Remove Tweet</button>
+          </div>
+          <hr />
+        </li>
+      </ul>
+    </ng-template>
+    <ng-template #noTweets>
+      No tweets
+    </ng-template>
+  </div>
+
+  <div *ngSwitchDefault>Select view Mode</div>
+
+</div>
+
+<hr/>
+<h2>Custom directive</h2>
+<input type="text" [appInputFormat]="{maxsize:10,format:'uppercase'}"/>
+
+<div id="accordion">
+  <button class="btn btn-primary" (click)="loadTweets()">Load Tweets</button>
+    <zippy *ngFor="let tweet of tweets; index as i;" title="{{tweet.text | summary:10}}">
+      {{tweet.text}}
+    </zippy>
+</div>

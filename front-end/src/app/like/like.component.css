@@ -1,0 +1,5 @@
+i {
+  color: #ccc;
+  cursor: pointer;
+}
+i.active {color: #ee17ea;}

@@ -1,0 +1,34 @@
+<form #form="ngForm" (ngSubmit)="submit(form)" class="col-md-6"> <!-- Auto apply ngForm -->
+  <div class="form-group">
+    <div>
+      <label for="firstName">First Name</label>
+      <input ngModel name="firstName" #firstName="ngModel" type="text" class="form-control" required minlength="3" maxlength="10" pattern="Massimo" (change)="log(firstName)" />
+      <app-form-validator [model]="firstName"></app-form-validator>
+    </div>
+    <div>
+      <label for="comment">Comment</label>
+      <!-- ngModel is eq [(ngModel)]="fielName" -->
+      <textarea ngModel id="comment" name="comment" #comment="ngModel" rows="10" class="form-control" required></textarea>
+      <app-form-validator [model]="comment"></app-form-validator>
+    </div>
+    <div class="checkbox"><label for="subscribe">
+      <input type="checkbox" ngModel id="subscribe" name="subscribe"> Subscribe to mailing list
+    </label>
+    <div class="form-group"><label for="contactMethod"></label>
+      <select multiple name="contactMethod" ngModel class="form-control">
+          <option value=""></option>
+        <!-- in "option" use [value]="method.id" for primitive type, [ngValue]="method" for complex type  -->
+        <option *ngFor="let method of contactMethods" [ngValue]="method">{{method.name}}</option>
+      </select>
+    </div>
+
+    <div class="radio" *ngFor="let method of contactMethods"><label for="secondaryContactMethod-{{method.id}}">
+      <input type="radio" id="secondaryContactMethod-{{method.id}}" name="secondaryContactMethod" ngModel [value]="method">
+      {{method.name}}
+    </label></div>
+
+    <p>{{form.value | json}}</p>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="ngSubmit" [disabled]="!form.valid">Submit</button>
+</form>

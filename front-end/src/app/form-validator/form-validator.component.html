@@ -1,0 +1,10 @@
+<div *ngIf="model.pending" class="alert alert-warning">Validating...</div>
+<div *ngIf="model.touched && model.invalid" class="alert alert-danger">
+    <div *ngIf="model.errors.required">Field required.</div>
+    <div *ngIf="model.errors.email">Should be a valid email address.</div>
+    <div *ngIf="model.errors.uniqueEmail">Email is already taken.</div>
+    <div *ngIf="model.errors.minlength">Should be at least {{model.errors.minlength.requiredLength}} characters.</div>
+    <div *ngIf="model.errors.pattern">Invalid format. Pattern {{model.errors.pattern.requiredPattern}} is required.</div>
+    <div *ngIf="model.errors.cannotContainSpace">Cannot contain space.</div>
+    <!--<p>{{model.errors | json}}</p>-->
+</div>

@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)=login()>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input id="username"
+           formControlName="username"
+           type="text"
+           class="form-control">
+    <app-form-validator [model]="username"></app-form-validator>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password"
+           formControlName="password"
+           type="password"
+           class="form-control">
+    <app-form-validator [model]="password"></app-form-validator>
+  </div>
+  <div formGroupName="nested">
+      <div class="form-group">
+          <label for="username2">Username</label>
+          <input id="username2"
+                 formControlName="username"
+                 type="text"
+                 class="form-control">
+          <app-form-validator [model]="nestedUsername"></app-form-validator>
+        </div>
+        <div class="form-group">
+          <label for="password2">Password</label>
+          <input id="password2"
+                 formControlName="password"
+                 type="password"
+                 class="form-control">
+          <app-form-validator [model]="nestedPassword"></app-form-validator>
+        </div>
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid || form.pending || busy">Sign Up</button>
+  <div *ngIf="form.errors" class="alert alert-danger">Invalid credentials</div>
+  <div *ngIf="busy" class="alert alert-info">Processing...</div>
+</form>

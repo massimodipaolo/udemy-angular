@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header" (click)="active=!active">
+    <a class="card-link">
+      {{title}}
+    </a>
+    <i class="fa" [ngClass]="{
+       'fa-chevron-up': active,
+       'fa-chevron-down': !active
+       }"></i>
+  </div>
+  <div class="collapse" [class.show]="active">
+    <div class="card-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
