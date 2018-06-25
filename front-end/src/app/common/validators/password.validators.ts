@@ -2,11 +2,11 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class PasswordValidators {
 
-  static check(control: AbstractControl): Promise<ValidationErrors | null> {
+  static passwordCheck(control: AbstractControl): Promise<ValidationErrors | null> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (control.value === '1234') {
-          resolve({check: true});
+        if (control.value !== '1234') {
+          resolve({passwordCheck: true});
         } else {
           resolve(null);
         }
@@ -14,9 +14,11 @@ export class PasswordValidators {
     });
   }
 
-  static equal(oldValue: string, newValue: string): ValidationErrors | null {
-    if (oldValue !== newValue) {
-      return { equal: true};
+  static passwordShouldMatch(control: AbstractControl) {
+    const newPassword = control.get('newPassword');
+    const confirmPassword = control.get('confirmPassword');
+    if (newPassword.value !== confirmPassword.value) {
+      return { passwordShouldMatch: true };
     }
     return null;
   }

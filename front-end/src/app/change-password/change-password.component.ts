@@ -11,16 +11,21 @@ export class ChangePasswordComponent {
 
   form: FormGroup;
 
-  get newPassword() {return this.form.get('newPassword').value; }
-  get confirmPassword() {return this.form.get('confirmPassword').value; }
-
   constructor(fb: FormBuilder) {
     this.form = fb.group({
-      oldPassword: ['', [Validators.required], [PasswordValidators.check]],
+      oldPassword: ['', [Validators.required], [PasswordValidators.passwordCheck]],
       newPassword: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required, PasswordValidators.equal(this.newPassword, this.confirmPassword)]]
-    });
+      confirmPassword: ['', [Validators.required]]
+    },
+    {
+      validator: PasswordValidators.passwordShouldMatch
+    }
+  );
   }
+
+  get oldPassword() {return this.form.get('oldPassword'); }
+  get newPassword() {return this.form.get('newPassword'); }
+  get confirmPassword() {return this.form.get('confirmPassword'); }
 
   change() {
   }

@@ -6,5 +6,7 @@
     <div *ngIf="model.errors.minlength">Should be at least {{model.errors.minlength.requiredLength}} characters.</div>
     <div *ngIf="model.errors.pattern">Invalid format. Pattern {{model.errors.pattern.requiredPattern}} is required.</div>
     <div *ngIf="model.errors.cannotContainSpace">Cannot contain space.</div>
+    <div *ngIf="model.errors.passwordCheck">Wrong password!</div>
+
     <!--<p>{{model.errors | json}}</p>-->
 </div>
