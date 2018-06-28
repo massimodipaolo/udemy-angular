@@ -18,6 +18,7 @@ import { SignupComponent } from './signup/signup.component';
 import { FormValidatorComponent } from './form-validator/form-validator.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostsComponentComponent } from './posts-component/posts-component.component';
+import { PostService } from './services/post.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PostsComponentComponent } from './posts-component/posts-component.compo
     HttpModule
   ],
   providers: [
-   CoursesService // Singleton
+   CoursesService, // Singleton
+   PostService
   ],
   bootstrap: [AppComponent]
 })

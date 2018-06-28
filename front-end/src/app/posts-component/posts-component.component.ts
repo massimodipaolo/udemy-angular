@@ -1,29 +1,42 @@
-import { Component } from '@angular/core';
-import { Http } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+import { PostService, Post } from '../services/post.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-posts-component',
   templateUrl: './posts-component.component.html',
   styleUrls: ['./posts-component.component.css']
 })
-export class PostsComponentComponent {
+export class PostsComponentComponent implements OnInit {
 
   posts: Post[];
-  private url = 'https://jsonplaceholder.typicode.com/posts';
 
-  constructor(private http: Http) {
-      http
-      .get(this.url)
-      .subscribe(response => {
+  ngOnInit(): void {
+      this.service.all()
+      .subscribe(
+        response => {
         this.posts = response.json();
+      },
+        error => {
+        console.log(error, 'An unexpected error occurred');
       });
   }
 
+  constructor(private service: PostService) {
+  }
+
   create(input: HTMLInputElement) {
-      this.http
-      .post(this.url, new Post(input.value))
-      .subscribe(response => {
+      this.service.create(new Post(input.value))
+      .subscribe(
+        response => {
         this.posts.push(response.json() as Post);
+        input.value = '';
+      },(error: Response) => {
+          if (error.status === 400) {
+              // this.form.setErrors(error.json());
+          } else {
+            console.log('An unexpected error occurred');
+          }
       });
   }
 
@@ -31,38 +44,36 @@ export class PostsComponentComponent {
     post.isRead = true;
     post.title = post.title + ' - edited';
 
-    this.http
-      .put(this.url + '/' + post.id, post)
+    this.service.update(post)
       .subscribe(response => {
         post = response.json() as Post;
         console.log(post);
       }
       )
     ;
-
-    /*
-    this.http
-    .patch(this.url + '/' + post.id, JSON.stringify({isRead: post.isRead, isPatched: true}) )
-    .subscribe(response => console.log(response.json() as Post));
-    */
   }
 
   delete(post: Post) {
-    this.http.delete(this.url + '/' + post.id)
-    .subscribe(response => {
+    //post.id = 200;
+    this.service.delete(post)
+    .subscribe(
+      response => {
       if (response.ok) {
         const index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       }
       console.log(response);
-    });
+    },
+    (error: Response) => {
+      if (error.status === 404) {
+        console.log('Post ' + post.id + ' was already deleted');
+      } else {
+        console.log('An unexpected error occurred');
+      }
+      console.log(error);
+    }
+  );
   }
 
 }
 
-export class Post {
-  id: number;
-  userId: number;
-  isRead = false;
-  constructor(public title?: string) {}
-}
