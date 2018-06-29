@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService, Post } from '../services/post.service';
 import { error } from 'protractor';
+import { AppError } from '../common/errors/app-error';
+import { NotFoundError } from '../common/errors/not-found-error';
+import { BadRequestError } from '../common/errors/bad-request-error';
 
 @Component({
   selector: 'app-posts-component',
@@ -31,8 +34,8 @@ export class PostsComponentComponent implements OnInit {
         response => {
         this.posts.push(response.json() as Post);
         input.value = '';
-      },(error: Response) => {
-          if (error.status === 400) {
+      },(error: AppError) => {
+          if (error instanceof BadRequestError) {
               // this.form.setErrors(error.json());
           } else {
             console.log('An unexpected error occurred');
@@ -64,8 +67,8 @@ export class PostsComponentComponent implements OnInit {
       }
       console.log(response);
     },
-    (error: Response) => {
-      if (error.status === 404) {
+    (error: AppError) => {
+      if (error instanceof NotFoundError) {
         console.log('Post ' + post.id + ' was already deleted');
       } else {
         console.log('An unexpected error occurred');
